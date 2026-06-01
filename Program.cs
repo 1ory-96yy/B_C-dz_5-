@@ -14,6 +14,48 @@ namespace ConsoleApp1
             var AliceWallet = new WalletService().CreateWallet("Alice");
             var BobWallet = new WalletService().CreateWallet("Bob");
 
+            var CarolWallet = new WalletService().CreateWallet("Carol");
+            var DaveWallet = new WalletService().CreateWallet("Dave");
+            var EveWallet = new WalletService().CreateWallet("Eve");
+
+            try
+            {
+                var tx1 = transactionService.CreateTransaction(AliceWallet, BobWallet.address, 10);
+                var tx2 = transactionService.CreateTransaction(BobWallet, CarolWallet.address, 5);
+                blockchain.AddTransaction(tx1);
+                blockchain.AddTransaction(tx2);
+                blockchain.MinePendingTransactions(BobWallet.address);
+
+                var tx3 = transactionService.CreateTransaction(CarolWallet, AliceWallet.address, 20);
+                var tx4 = transactionService.CreateTransaction(DaveWallet, AliceWallet.address, 1000);
+                blockchain.AddTransaction(tx3);
+                blockchain.AddTransaction(tx4);
+                blockchain.MinePendingTransactions(EveWallet.address);
+
+                var tx5 = transactionService.CreateTransaction(AliceWallet, EveWallet.address, 2.5);
+                var tx6 = transactionService.CreateTransaction(EveWallet, BobWallet.address, 1.25);
+                blockchain.AddTransaction(tx5);
+                blockchain.AddTransaction(tx6);
+                blockchain.MinePendingTransactions(AliceWallet.address);
+
+                var tx7 = transactionService.CreateTransaction(BobWallet, DaveWallet.address, 50);
+                var tx8 = transactionService.CreateTransaction(DaveWallet, CarolWallet.address, 250);
+                blockchain.AddTransaction(tx7);
+                blockchain.AddTransaction(tx8);
+                blockchain.MinePendingTransactions(DaveWallet.address);
+
+                Console.WriteLine("\n--- Demo blockchain created with 4 blocks (plus genesis) ---\n");
+                displayService.printChain(blockchain.chain);
+                displayService.PrintTransactionHistory(AliceWallet.address, blockchain.chain);
+                displayService.PrintLargestTransaction(blockchain.chain);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Demo setup warning: {ex.Message}");
+                Console.ResetColor();
+            }
+
             while (true)
             {
                 Console.WriteLine("\n1. Create Transaction");
