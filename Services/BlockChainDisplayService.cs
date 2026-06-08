@@ -57,26 +57,26 @@ namespace ConsoleApp1.Services
 
             if (foundTransactions.Count == 0)
             {
-                Console.WriteLine($"\nТранзакцій не знайдено для адреси: {address}");
+                Console.WriteLine($"\nNo transactions found for address: {address}");
                 return;
             }
 
             Console.WriteLine($"\n╔══════════════════════════════════════════════╗");
-            Console.WriteLine($"║  Історія транзакцій для {address}");
+            Console.WriteLine($"║  Transaction history for {address}  ║ ");
             Console.WriteLine($"╚══════════════════════════════════════════════╝\n");
 
             foreach (var (blockIndex, tx) in foundTransactions)
             {
-                Console.WriteLine($"Блок #{blockIndex}");
+                Console.WriteLine($"Block #{blockIndex}");
                 if (tx.from.Equals(address, StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine($"Відправлено  {tx.to}: {tx.amount} монет");
+                    Console.WriteLine($"Sent to {tx.to}: {tx.amount} coins");
                 }
                 else
                 {
-                    Console.WriteLine($"Отримано від {tx.from}: {tx.amount} монет");
+                    Console.WriteLine($"Received from {tx.from}: {tx.amount} coins");
                 }
-                Console.WriteLine($"Час: {tx.timestamp}");
+                Console.WriteLine($"Time: {tx.timestamp}");
                 Console.WriteLine();
             }
         }
@@ -91,14 +91,14 @@ namespace ConsoleApp1.Services
 
             if (largestTx.transaction == null)
             {
-                Console.WriteLine("Транзакцій не знайдено в блокчейні.");
+                Console.WriteLine("No transactions found in the blockchain.");
                 return;
             }
 
-            Console.WriteLine($"\nНайбільша транзакція в мережі:");
-            Console.WriteLine($"   Блок #{largestTx.blockIndex}");
+            Console.WriteLine($"\nLargest transaction in the network:");
+            Console.WriteLine($"   Block #{largestTx.blockIndex}");
             Console.WriteLine($"   {largestTx.transaction.from} → {largestTx.transaction.to}");
-            Console.WriteLine($"   Сума: {largestTx.transaction.amount} монет\n");
+            Console.WriteLine($"   Amount: {largestTx.transaction.amount} coins\n");
         }
 
     }

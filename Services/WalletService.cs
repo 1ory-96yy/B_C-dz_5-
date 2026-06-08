@@ -15,7 +15,7 @@ namespace ConsoleApp1.Services
             var publicKey = ecdsa.ExportSubjectPublicKeyInfo();
             var privateKey = ecdsa.ExportECPrivateKey();
 
-            var address = Convert.ToBase64String(publicKey).Substring(0, 32);
+            var address = new string(Convert.ToBase64String(publicKey).TakeLast(32).ToArray());
             return new Wallet(name, address, publicKey, privateKey);
         }
         public bool VerifySignature(byte[] data, byte[] signature, byte[] publicKey)

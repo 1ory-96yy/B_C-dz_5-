@@ -43,7 +43,6 @@ namespace ConsoleApp1
                 blockchain.AddTransaction(tx7);
                 blockchain.AddTransaction(tx8);
                 blockchain.MinePendingTransactions(DaveWallet.address);
-
                 Console.WriteLine("\n--- Demo blockchain created with 4 blocks (plus genesis) ---\n");
                 displayService.printChain(blockchain.chain);
                 displayService.PrintTransactionHistory(AliceWallet.address, blockchain.chain);
